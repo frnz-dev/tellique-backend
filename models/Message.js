@@ -5,7 +5,11 @@ const MessageSchema = new mongoose.Schema({
   to: { type: String, required: true },
   nickname: { type: String, default: "Anonymous" },
   content: { type: String, required: true },
-  date: { type: String, required: true } // Store formatted date string
+  date: {
+    type: String,
+    required: true,
+    default: () => new Date().toLocaleString() // ✅ Automatically adds current time
+  }
 });
 
 module.exports = mongoose.model("Message", MessageSchema);

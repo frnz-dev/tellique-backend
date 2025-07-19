@@ -20,7 +20,10 @@ mongoose.connect(process.env.MONGO_URI)
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
 // Routes
+const authRoutes = require("./routes/user");
 const messageRoutes = require("./routes/messages");
+
+app.use("/", authRoutes); // Handles /signup and /login
 app.use("/api/messages", messageRoutes);
 
 // Root route (fixes "Cannot GET /")
