@@ -20,18 +20,18 @@ mongoose.connect(process.env.MONGO_URI)
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
 // Routes
-const authRoutes = require("./routes/user");
+const userRoutes = require("./routes/user");
 const messageRoutes = require("./routes/messages");
 
-app.use("/", authRoutes); // Handles /signup and /login
-app.use("/api/messages", messageRoutes);
+app.use("/api/users", userRoutes);         // handles /signup, /login, /profile
+app.use("/api/messages", messageRoutes);   // handles /inbox, /sent, message posting
 
-// Root route (fixes "Cannot GET /")
+// Root route
 app.get("/", (req, res) => {
   res.send("✅ Tellique Backend is Live!");
 });
 
-// Test route for checking MongoDB status
+// Test route
 app.get("/test", (req, res) => {
   res.json({ message: "🎉 Connected to MongoDB Cloud!" });
 });
