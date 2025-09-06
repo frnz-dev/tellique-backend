@@ -8,9 +8,9 @@ const MessageSchema = new mongoose.Schema({
   date: {
     type: String,
     required: true,
-    default: () => new Date().toLocaleString() // ✅ Automatically adds current time
-  }
+    default: () => new Date().toLocaleString()
+  },
+  senderAvatar: { type: String, default: "" } // ✅ added field
 });
 
 module.exports = mongoose.model("Message", MessageSchema);
-

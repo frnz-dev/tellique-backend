@@ -9,7 +9,10 @@ const app = express();
 
 // Middleware
 app.use(cors());
-app.use(express.json());
+
+// ✅ Increase body size limit to handle profile images (base64)
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 // Debug connection string (optional)
 console.log("🧪 MONGO_URI:", process.env.MONGO_URI);
