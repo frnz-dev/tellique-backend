@@ -23,8 +23,9 @@ mongoose.connect(process.env.MONGO_URI)
 const userRoutes = require("./routes/user");
 const messageRoutes = require("./routes/messages");
 
-app.use("/api/users", userRoutes);         // handles /signup, /login, /profile
-app.use("/api/messages", messageRoutes);   // handles /inbox, /sent, message posting
+// ✅ Use /api/users so it matches your frontend
+app.use("/api/users", userRoutes);
+app.use("/api/messages", messageRoutes);
 
 // Root route
 app.get("/", (req, res) => {
