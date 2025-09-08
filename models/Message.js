@@ -10,7 +10,8 @@ const MessageSchema = new mongoose.Schema({
     required: true,
     default: () => new Date().toLocaleString()
   },
-  senderAvatar: { type: String, default: "" } // ✅ added field
+  senderAvatar: { type: String, default: "" }, // ✅ avatar
+  reaction: { type: String, default: "" } // ✅ reaction (👍 ❤️ 😂 etc.)
 });
 
 module.exports = mongoose.model("Message", MessageSchema);

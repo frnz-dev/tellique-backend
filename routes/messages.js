@@ -14,17 +14,16 @@ router.post("/", async (req, res) => {
   try {
     // ✅ Get sender's avatar (if available)
     const sender = await User.findOne({ username: from });
-const senderAvatar = sender?.profilePic || "";
+    const senderAvatar = sender?.profilePic || "";
 
-const message = new Message({
-  from,
-  to,
-  nickname: nickname || "Anonymous",
-  content,
-  date: new Date().toLocaleString(),
-  senderAvatar   // ✅ add here
-});
-
+    const message = new Message({
+      from,
+      to,
+      nickname: nickname || "Anonymous",
+      content,
+      date: new Date().toLocaleString(),
+      senderAvatar
+    });
 
     await message.save();
     res.status(201).json({ success: true, message: "Message sent!" });
@@ -53,6 +52,25 @@ router.get("/sent/:username", async (req, res) => {
   } catch (err) {
     console.error("❌ Sent fetch error:", err);
     res.status(500).json({ error: "Failed to fetch sent messages" });
+  }
+});
+
+// ✅ PATCH /api/messages/:id/react - add/update reaction
+router.patch("/:id/react", async (req, res) => {
+  try {
+    const { reaction } = req.body;
+    const updated = await Message.findByIdAndUpdate(
+      req.params.id,
+      { reaction },
+      { new: true }
+    );
+    if (!updated) {
+      return res.status(404).json({ error: "Message not found" });
+    }
+    res.status(200).json(updated);
+  } catch (err) {
+    console.error("❌ Reaction error:", err);
+    res.status(500).json({ error: "Failed to update reaction" });
   }
 });
 
